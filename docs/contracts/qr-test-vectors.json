@@ -1,0 +1,73 @@
+{
+  "schema": "ktl-flow-qr v1",
+  "rule": "ck = SHA-256(키 순서 v,rn,sn,ap,md,rg,cn 고정, 공백 없는 JSON, ASCII)의 앞 8자리 hex. cn = 업체명 UTF-8 → Base64 URL-safe, '=' 제거. 모든 값은 가짜 예시",
+  "vectors": [
+    {
+      "input": {
+        "rn": "25-123456-01",
+        "sn": "FV-0001",
+        "ap": "ABCDE-2013-1",
+        "md": "FLOW-03D",
+        "rg": 22,
+        "company": "연암공대"
+      },
+      "ck_source": "{\"v\":1,\"rn\":\"25-123456-01\",\"sn\":\"FV-0001\",\"ap\":\"ABCDE-2013-1\",\"md\":\"FLOW-03D\",\"rg\":22,\"cn\":\"7Jew7JWU6rO164yA\"}",
+      "qr": "{\"v\":1,\"rn\":\"25-123456-01\",\"sn\":\"FV-0001\",\"ap\":\"ABCDE-2013-1\",\"md\":\"FLOW-03D\",\"rg\":22,\"cn\":\"7Jew7JWU6rO164yA\",\"ck\":\"51cf3e4f\"}",
+      "valid": true
+    },
+    {
+      "input": {
+        "rn": "26-000001-02",
+        "sn": "A100-0007",
+        "ap": "ABCD-2020-3",
+        "md": "FM-100",
+        "rg": 30,
+        "company": "가나다테크(주)"
+      },
+      "ck_source": "{\"v\":1,\"rn\":\"26-000001-02\",\"sn\":\"A100-0007\",\"ap\":\"ABCD-2020-3\",\"md\":\"FM-100\",\"rg\":30,\"cn\":\"6rCA64KY64uk7YWM7YGsKOyjvCk\"}",
+      "qr": "{\"v\":1,\"rn\":\"26-000001-02\",\"sn\":\"A100-0007\",\"ap\":\"ABCD-2020-3\",\"md\":\"FM-100\",\"rg\":30,\"cn\":\"6rCA64KY64uk7YWM7YGsKOyjvCk\",\"ck\":\"4d12df1d\"}",
+      "valid": true
+    },
+    {
+      "input": {
+        "rn": "26-000002-01",
+        "sn": "SN 55/7",
+        "ap": "XYZ1-2019-12",
+        "md": "PT-7",
+        "rg": 15,
+        "company": "Sample Lab"
+      },
+      "ck_source": "{\"v\":1,\"rn\":\"26-000002-01\",\"sn\":\"SN 55/7\",\"ap\":\"XYZ1-2019-12\",\"md\":\"PT-7\",\"rg\":15,\"cn\":\"U2FtcGxlIExhYg\"}",
+      "qr": "{\"v\":1,\"rn\":\"26-000002-01\",\"sn\":\"SN 55/7\",\"ap\":\"XYZ1-2019-12\",\"md\":\"PT-7\",\"rg\":15,\"cn\":\"U2FtcGxlIExhYg\",\"ck\":\"26e1fc7e\"}",
+      "valid": true
+    },
+    {
+      "input": {
+        "rn": "25-123456-01",
+        "sn": "FV-0001",
+        "ap": "ABCDE-2013-1",
+        "md": "FLOW-03D",
+        "rg": 22,
+        "company": "연암공대"
+      },
+      "ck_source": "{\"v\":1,\"rn\":\"25-123456-01\",\"sn\":\"FV-0001\",\"ap\":\"ABCDE-2013-1\",\"md\":\"FLOW-03D\",\"rg\":22,\"cn\":\"7Jew7JWU6rO164yA\"}",
+      "qr": "{\"v\":1,\"rn\":\"25-123456-01\",\"sn\":\"FV-0001\",\"ap\":\"ABCDE-2013-1\",\"md\":\"FLOW-03D\",\"rg\":23,\"cn\":\"7Jew7JWU6rO164yA\",\"ck\":\"51cf3e4f\"}",
+      "valid": false,
+      "reason": "rg를 바꿨지만 ck는 그대로 → 체크값 불일치"
+    },
+    {
+      "input": {
+        "rn": "25-123456-01",
+        "sn": "FV-0001",
+        "ap": "ABCDE-2013-1",
+        "md": "FLOW-03D",
+        "rg": 22,
+        "company": "연암공대"
+      },
+      "ck_source": "{\"v\":1,\"rn\":\"25-123456-01\",\"sn\":\"FV-0001\",\"ap\":\"ABCDE-2013-1\",\"md\":\"FLOW-03D\",\"rg\":22,\"cn\":\"7Jew7JWU6rO164yA\"}",
+      "qr": "{\"v\":2,\"rn\":\"25-123456-01\",\"sn\":\"FV-0001\",\"ap\":\"ABCDE-2013-1\",\"md\":\"FLOW-03D\",\"rg\":22,\"cn\":\"7Jew7JWU6rO164yA\",\"ck\":\"51cf3e4f\"}",
+      "valid": false,
+      "reason": "지원하지 않는 버전 v=2 → 거부"
+    }
+  ]
+}
